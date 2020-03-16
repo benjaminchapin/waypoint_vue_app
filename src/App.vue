@@ -11,6 +11,7 @@
       |
       <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link>
     </div>
+    <router-view />
   </div>
 </template>
 

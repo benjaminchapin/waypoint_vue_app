@@ -44,7 +44,7 @@ const routes = [
     component: UsersShow
   },
   {
-    path: "/index",
+    path: "/hikes",
     name: "hikes-index",
     component: HikesIndex
   }
