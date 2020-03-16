@@ -8,11 +8,15 @@
         </ul>
         <div class="form-group">
           <label>First Name:</label>
-          <input type="text" class="form-control" v-model="first_name" />
+          <input type="text" class="form-control" v-model="firstName" />
         </div>
         <div class="form-group">
           <label>Last Name:</label>
-          <input type="text" class="form-control" v-model="last_name" />
+          <input type="text" class="form-control" v-model="lastName" />
+        </div>
+        <div class="form-group">
+          <label>Location (Address):</label>
+          <input type="text" class="form-control" v-model="address" />
         </div>
         <div class="form-group">
           <label>Skill Level:</label>
@@ -27,7 +31,7 @@
           <input type="password" class="form-control" v-model="password" />
         </div>
         <div class="form-group">
-          <label>Password confirmation:</label>
+          <label>Confirm Password:</label>
           <input type="password" class="form-control" v-model="passwordConfirmation" />
         </div>
         <input type="submit" class="btn btn-primary" value="Submit" />
@@ -42,9 +46,10 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      first_name: "",
-      last_name: "",
-      skill_level: "",
+      firstName: "",
+      lastName: "",
+      address: "",
+      skillLevel: "",
       email: "",
       password: "",
       passwordConfirmation: "",
@@ -54,9 +59,10 @@ export default {
   methods: {
     submit: function() {
       var params = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        skill_level: this.skill_level,
+        first_name: this.firstName,
+        last_name: this.lastName,
+        address: this.address,
+        skill_level: this.skillLevel,
         email: this.email,
         password: this.password,
         password_confirmation: this.passwordConfirmation

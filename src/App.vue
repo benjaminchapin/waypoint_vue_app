@@ -3,7 +3,9 @@
     <div id="nav">
       <router-link to="/">Home</router-link>
       |
-      <router-link v-if="isLoggedIn()" to="/profile">Your Account</router-link>
+      <router-link v-if="isLoggedIn()" :to="`/users/${getUserId()}`">Your Account</router-link>
+      |
+      <router-link v-if="isLoggedIn()" to="/hikes">Hikes Index</router-link>
       |
       <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link>
       |

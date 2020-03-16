@@ -5,7 +5,9 @@ import Signup from "../views/Signup.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import UsersShow from "../views/UsersShow.vue";
+import UsersEdit from "../views/UsersEdit.vue";
 import HikesIndex from "../views/HikesIndex.vue";
+import HikesShow from "../views/HikesShow.vue";
 
 Vue.use(VueRouter);
 
@@ -39,7 +41,7 @@ const routes = [
     component: Logout
   },
   {
-    path: "/profile/:id",
+    path: "/users/:id",
     name: "users-show",
     component: UsersShow
   },
@@ -47,6 +49,16 @@ const routes = [
     path: "/hikes",
     name: "hikes-index",
     component: HikesIndex
+  },
+  {
+    path: "/hikes/:id",
+    name: "hikes-show",
+    component: HikesShow
+  },
+  {
+    path: "/users/:id/edit",
+    name: "users-edit",
+    component: UsersEdit
   }
 ];
 
