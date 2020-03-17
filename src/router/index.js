@@ -8,6 +8,7 @@ import UsersShow from "../views/UsersShow.vue";
 import UsersEdit from "../views/UsersEdit.vue";
 import HikesIndex from "../views/HikesIndex.vue";
 import HikesShow from "../views/HikesShow.vue";
+import HikesNew from "../views/HikesNew.vue";
 
 Vue.use(VueRouter);
 
@@ -59,6 +60,11 @@ const routes = [
     path: "/users/:id/edit",
     name: "users-edit",
     component: UsersEdit
+  },
+  {
+    path: "/createhike",
+    name: "hikes-new",
+    component: HikesNew
   }
 ];
 
