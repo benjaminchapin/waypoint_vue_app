@@ -18,10 +18,16 @@
           <label>Location (Address):</label>
           <input type="text" class="form-control" v-model="address" />
         </div>
+
         <div class="form-group">
-          <label>Skill Level:</label>
-          <input type="text" class="form-control" v-model="skillLevel" />
+          <label for="skill_levels">Difficulty Level:</label>
+          <select id="skill_levels" type="text" class="form-control" v-model="skillLevel">
+            <option value="novice">Novice</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
         </div>
+
         <div class="form-group">
           <label>Email:</label>
           <input type="email" class="form-control" v-model="email" />

@@ -12,11 +12,11 @@
         </div>
         <div class="form-group">
           <label>Password:</label>
-          <input type="text" class="form-control" v-model="user.password" />
+          <input type="password" class="form-control" v-model="user.password" />
         </div>
         <div class="form-group">
           <label>Confirm Password:</label>
-          <input type="text" class="form-control" v-model="user.password_confirmation" />
+          <input type="password" class="form-control" v-model="user.password_confirmation" />
         </div>
         <div class="form-group">
           <label>First Name:</label>
@@ -26,10 +26,16 @@
           <label>Last Name:</label>
           <input type="text" class="form-control" v-model="user.last_name" />
         </div>
+
         <div class="form-group">
-          <label>Skill Level:</label>
-          <input type="text" class="form-control" v-model="user.skill_level" />
+          <label for="skill_levels">Skill Level:</label>
+          <select id="skill_levels" type="text" class="form-control" v-model="user.skill_level">
+            <option value="novice">Novice</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
         </div>
+
         <input type="submit" class="btn btn-primary" value="Update User" />
         <br />
         <br />

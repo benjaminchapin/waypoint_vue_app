@@ -4,34 +4,63 @@
     <p>Description: {{ hike.description }}</p>
     <p>Difficulty Level: {{ hike.difficulty_level }}</p>
     <br />
+    <form v-on:submit.prevent="updateHike()">
+      <h1>Edit Hike</h1>
+      <ul>
+        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+      </ul>
+      <div class="form-group">
+        Name:
+        <input v-model="hike.name" type="text" placeholder="name" />
+        <br />
+        Description:
+        <input v-model="hike.description" type="text" placeholder="description" />
+        <br />
+        <div class="form-group">
+          <label for="difficulty_levels">Difficulty Level:</label>
+          <select id="difficulty_levels" type="text" class="form-control" v-model="hike.difficulty_level">
+            <option value="novice">Novice</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+        <br />
+      </div>
+      <button v-on:click="updateHike(hike)">Edit Hike</button>
+    </form>
+    <button v-on:click="destroyHike(hike)">Delete Hike</button>
+    <div></div>
+    <br />
+    <h1>Waypoints:</h1>
     <div v-for="waypoint in hike.waypoints">
       <p>Name: {{ waypoint.name }}</p>
       <p>Description: {{ waypoint.description }}</p>
       <p>Latitude: {{ waypoint.latitude }}</p>
       <p>Longitude: {{ waypoint.longitude }}</p>
       <p><img :src="waypoint.image_url" alt="" /></p>
-      <button v-on:click="destroyWaypoint(waypoint)">Delete Waypoint</button>
       <br />
       <br />
-      <form v-on:submit.prevent="submit()">
+      <form v-on:submit.prevent="updateWaypoint()">
         <h1>Edit Waypoint</h1>
         <ul>
           <li class="text-danger" v-for="error in errors">{{ error }}</li>
         </ul>
         <div class="form-group">
           Name:
-          <input type="text" v-model="waypoint.name" />
+          <input v-model="waypoint.name" type="text" placeholder="name" />
           <br />
           Description:
-          <input type="text" v-model="waypoint.description" />
+          <input v-model="waypoint.description" type="text" placeholder="description" />
           <br />
           Image URL:
-          <input type="text" v-model="waypoint.image_url" />
+          <input type="text" v-model="waypoint.image_url" placeholder="image URL" />
           <br />
           Address:
           <input type="text" v-model="waypoint.address" />
         </div>
         <button v-on:click="updateWaypoint(waypoint)">Edit Waypoint</button>
+        <br />
+        <button v-on:click="destroyWaypoint(waypoint)">Delete Waypoint</button>
       </form>
     </div>
     <p>{{ errors }}</p>
@@ -42,6 +71,10 @@
       <br />
       Description:
       <input type="text" v-model="newWaypointDescription" />
+      <br />
+      <small v-if="newWaypointDescription" v-bind:class="{ 'text-danger': 100 - newWaypointDescription.length < 10 }">
+        {{ 100 - newWaypointDescription.length }} characters remaining
+      </small>
       <br />
       Image URL:
       <input type="text" v-model="newWaypointImageURL" />
@@ -69,6 +102,7 @@ export default {
   data: function() {
     return {
       hike: {},
+      hikes: {},
       newWaypointDescription: "",
       newWaypointName: "",
       newWaypointImageURL: "",
@@ -80,6 +114,9 @@ export default {
     axios.get("/api/hikes/" + this.$route.params.id).then(response => {
       this.hike = response.data;
       console.log(response.data);
+    });
+    axios.get("/api/hikes/").then(response => {
+      this.hikes = response.data;
     });
   },
   methods: {
@@ -106,7 +143,7 @@ export default {
         });
     },
     destroyWaypoint: function(waypoint) {
-      axios.delete("/api/waypoints/" + this.waypoint.id).then(response => {
+      axios.delete("/api/waypoints/" + waypoint.id).then(response => {
         var index = this.hike.waypoints.indexOf(waypoint);
         this.hike.waypoints.splice(index, 1);
         console.log("Waypoint deleted.", response.data);
@@ -114,15 +151,48 @@ export default {
     },
     updateWaypoint: function(waypoint) {
       var params = {
-        name: this.waypoint.name,
-        description: this.waypoint.description,
-        image_url: this.waypoint.image_url,
-        address: this.waypoint.address
+        name: waypoint.name,
+        description: waypoint.description,
+        image_url: waypoint.image_url,
+        address: waypoint.address
       };
-      axios.patch("/api/waypoints/" + this.waypoint.id, params).then(response => {
-        this.hike.waypoints.push(response.data);
-        console.log("Waypoint updated.", response.data);
-      });
+      axios
+        .patch("/api/waypoints/" + waypoint.id, params)
+        .then(response => {
+          console.log("Waypoint updated!", response.data);
+          // this.hike.waypoints.push(response.data);
+          // this.$router.push(`/hikes/${this.hike.id}`);
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
+    },
+    updateHike: function(hike) {
+      var params = {
+        name: hike.name,
+        description: hike.description,
+        difficulty_level: hike.difficulty_level
+      };
+      axios
+        .patch("/api/hikes/" + hike.id, params)
+        .then(response => {
+          console.log("Hike updated!", response.data);
+          // this.hike.waypoints.push(response.data);
+          // this.$router.push(`/hikes/${this.hike.id}`);
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
+    },
+    destroyHike: function(hike) {
+      axios
+        .delete("/api/hikes/" + hike.id)
+        .then(response => {
+          this.$router.push("/hikes");
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
     }
   }
 };

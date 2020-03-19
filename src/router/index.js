@@ -52,6 +52,11 @@ const routes = [
     component: HikesIndex
   },
   {
+    path: "/hikes/new",
+    name: "hikes-new",
+    component: HikesNew
+  },
+  {
     path: "/hikes/:id",
     name: "hikes-show",
     component: HikesShow
@@ -60,11 +65,6 @@ const routes = [
     path: "/users/:id/edit",
     name: "users-edit",
     component: UsersEdit
-  },
-  {
-    path: "/createhike",
-    name: "hikes-new",
-    component: HikesNew
   }
 ];
 

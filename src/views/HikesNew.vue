@@ -1,7 +1,7 @@
 <template>
   <div class="hikes-new">
     <div class="container">
-      <form v-on:submit.prevent="submit()">
+      <form v-on:submit.prevent="createHike()">
         <h1>New Hike</h1>
         <img v-if="status" v-bind:src="`https://http.cat/${status}`" />
         <ul>
@@ -15,10 +15,16 @@
           <label>Description:</label>
           <input type="text" class="form-control" v-model="description" />
         </div>
+
         <div class="form-group">
-          <label>Difficulty Level:</label>
-          <input type="text" class="form-control" v-model="difficultyLevel" />
+          <label for="difficulty_levels">Difficulty Level:</label>
+          <select id="difficulty_levels" type="text" class="form-control" v-model="difficultyLevel">
+            <option value="novice">Novice</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
         </div>
+
         <div class="form-group">
           <label>Start Address:</label>
           <input type="text" class="form-control" v-model="startAddress" />
@@ -44,19 +50,22 @@ export default {
       startAddress: "",
       endAddress: "",
       errors: [],
-      status: ""
+      status: "",
+      user_id: localStorage.getItem("user_id")
     };
   },
   methods: {
-    submit: function() {
-      var formData = new FormData();
-      formData.append("name", this.name);
-      formData.append("description", this.description);
-      formData.append("difficulty_level", this.difficultyLevel);
-      formData.append("start_address", this.startAddress);
-      formData.append("end_address", this.endAddress);
+    createHike: function() {
+      var params = {
+        name: this.name,
+        description: this.description,
+        difficulty_level: this.difficultyLevel,
+        start_address: this.startAddress,
+        end_address: this.endAddress,
+        user_id: this.user_id
+      };
       axios
-        .post("/api/hikes", formData)
+        .post("/api/hikes", params)
         .then(response => {
           this.$router.push(`/hikes/${response.data.id}`);
         })
