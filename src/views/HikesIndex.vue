@@ -1,7 +1,16 @@
 <template>
   <div class="hikes-index">
     <h1>All Hikes</h1>
-    <div v-for="hike in filterBy{hikes, difficultyFilter, 'difficulty_level'}">
+    <div>
+      <label for="difficulty_levels">Sort By Difficulty Level:</label>
+      <br />
+      <select id="difficulty_levels" type="text" class="form-control" v-model="difficultyFilter">
+        <option value="novice">Novice</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+    </div>
+    <div v-for="hike in filterBy(hikes, difficultyFilter, 'difficulty_level')">
       <h2>
         <router-link :to="`/hikes/${hike.id}`">{{ hike.name }}</router-link>
       </h2>
@@ -16,11 +25,14 @@
 
 <script>
 import axios from "axios";
+import Vue2Filters from "vue2-filters";
 
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function() {
     return {
-      hikes: []
+      hikes: [],
+      difficultyFilter: ""
     };
   },
   created: function() {
