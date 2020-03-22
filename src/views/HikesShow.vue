@@ -4,6 +4,8 @@
     <p>Description: {{ hike.description }}</p>
     <p>Difficulty Level: {{ hike.difficulty_level }}</p>
     <br />
+    <div id="map"></div>
+    <br />
     <form v-on:submit.prevent="updateHike()">
       <h1>Edit Hike</h1>
       <ul>
@@ -29,7 +31,6 @@
       <button v-on:click="updateHike(hike)">Edit Hike</button>
     </form>
     <button v-on:click="destroyHike(hike)">Delete Hike</button>
-    <div></div>
     <br />
     <h1>Waypoints:</h1>
     <div v-for="waypoint in hike.waypoints">
@@ -91,18 +92,24 @@
 
 <style>
 img {
-  width: 250px;
+  width: 150px;
+}
+#map {
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 600px;
 }
 </style>
 
 <script>
+/*global mapboxgl*/
 import axios from "axios";
 
 export default {
   data: function() {
     return {
       hike: {},
-      hikes: {},
       newWaypointDescription: "",
       newWaypointName: "",
       newWaypointImageURL: "",
@@ -114,9 +121,33 @@ export default {
     axios.get("/api/hikes/" + this.$route.params.id).then(response => {
       this.hike = response.data;
       console.log(response.data);
-    });
-    axios.get("/api/hikes/").then(response => {
-      this.hikes = response.data;
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiemVuZGVzaWducyIsImEiOiJjazdheDM3bnAxOTAxM2VvZDdlOGxkbzFhIn0.RHXlcu2cNHjSE9UObfd0KA";
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/light-v10",
+        center: [this.hike.start_long, this.hike.start_lat],
+        zoom: 13
+      });
+      var startPopup = new mapboxgl.Popup({ offset: 25 }).setText(`${this.hike.start_lat},  ${this.hike.start_long}`);
+      var endPopup = new mapboxgl.Popup({ offset: 25 }).setText(`${this.hike.end_lat},  ${this.hike.end_long}`);
+      var start = new mapboxgl.Marker()
+        .setLngLat([this.hike.start_long, this.hike.start_lat])
+        .setPopup(startPopup)
+        .addTo(map);
+      var end = new mapboxgl.Marker()
+        .setLngLat([this.hike.end_long, this.hike.end_lat])
+        .setPopup(endPopup)
+        .addTo(map);
+      this.hike.waypoints.forEach(waypoint => {
+        var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+          `<h2>${waypoint.name}</h2><img src="${waypoint.image_url}" alt="" />`
+        );
+        var marker = new mapboxgl.Marker()
+          .setLngLat([waypoint.longitude, waypoint.latitude])
+          .setPopup(popup)
+          .addTo(map);
+      });
     });
   },
   methods: {
