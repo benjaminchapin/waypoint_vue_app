@@ -91,14 +91,32 @@
 </template>
 
 <style>
-img {
-  width: 150px;
-}
 #map {
   top: 0;
   bottom: 0;
   width: 100%;
   height: 600px;
+}
+.waypoint-marker,
+.start-marker,
+.end-marker {
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.waypoint-marker {
+  background-image: url("https://cdn.iconscout.com/icon/premium/png-256-thumb/mushroom-1409567-1192660.png");
+}
+
+.start-marker {
+  background-image: url("https://cdn.iconscout.com/icon/premium/png-256-thumb/mushroom-1409567-1192660.png");
+}
+
+.end-marker {
+  background-image: url("https://cdn.iconscout.com/icon/premium/png-256-thumb/mushroom-1409567-1192660.png");
 }
 </style>
 
@@ -110,6 +128,8 @@ export default {
   data: function() {
     return {
       hike: {},
+      waypoint: {},
+      waypoints: [],
       newWaypointDescription: "",
       newWaypointName: "",
       newWaypointImageURL: "",
@@ -131,11 +151,21 @@ export default {
       });
       var startPopup = new mapboxgl.Popup({ offset: 25 }).setText(`${this.hike.start_lat},  ${this.hike.start_long}`);
       var endPopup = new mapboxgl.Popup({ offset: 25 }).setText(`${this.hike.end_lat},  ${this.hike.end_long}`);
-      var start = new mapboxgl.Marker()
+
+      // create a DOM element for the marker
+      var startEl = document.createElement("div");
+      startEl.className = "start-marker";
+
+      var start = new mapboxgl.Marker(startEl)
         .setLngLat([this.hike.start_long, this.hike.start_lat])
         .setPopup(startPopup)
         .addTo(map);
-      var end = new mapboxgl.Marker()
+
+      // create a DOM element for the marker
+      var endEl = document.createElement("div");
+      endEl.className = "end-marker";
+
+      var end = new mapboxgl.Marker(endEl)
         .setLngLat([this.hike.end_long, this.hike.end_lat])
         .setPopup(endPopup)
         .addTo(map);
@@ -143,11 +173,52 @@ export default {
         var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
           `<h2>${waypoint.name}</h2><img src="${waypoint.image_url}" alt="" />`
         );
-        var marker = new mapboxgl.Marker()
+
+        // create a DOM element for the marker
+        var el = document.createElement("div");
+        el.className = "waypoint-marker";
+
+        var marker = new mapboxgl.Marker(el)
           .setLngLat([waypoint.longitude, waypoint.latitude])
           .setPopup(popup)
           .addTo(map);
       });
+      map.on(
+        "load",
+        function() {
+          // helper function to push to coordinates array
+
+          var coordinates = [[this.hike.start_long, this.hike.start_lat]];
+          this.hike.waypoints.forEach(waypoint => {
+            coordinates.push([waypoint.longitude, waypoint.latitude]);
+          });
+          coordinates.push([this.hike.end_long, this.hike.end_lat]);
+          map.addSource("route", {
+            type: "geojson",
+            data: {
+              type: "Feature",
+              properties: {},
+              geometry: {
+                type: "LineString",
+                coordinates: coordinates
+              }
+            }
+          });
+          map.addLayer({
+            id: "route",
+            type: "line",
+            source: "route",
+            layout: {
+              "line-join": "round",
+              "line-cap": "round"
+            },
+            paint: {
+              "line-color": "#888",
+              "line-width": 8
+            }
+          });
+        }.bind(this)
+      );
     });
   },
   methods: {

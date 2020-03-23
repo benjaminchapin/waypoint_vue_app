@@ -1,24 +1,60 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      |
-      <router-link v-if="isLoggedIn()" :to="`/users/${getUserId()}`">Your Account</router-link>
-      |
-      <router-link v-if="isLoggedIn()" to="/hikes">Hikes Index</router-link>
-      |
-      <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link>
-      |
-      <router-link v-if="!isLoggedIn()" to="/login">Login</router-link>
-      |
-      <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link>
+    <!-- <div id="nav">
+      <li class="nav-item">
+        <router-link class="nav-link" to="/">Home</router-link>
+      </li>
+      <li v-if="isLoggedIn()" class="nav-item">
+        <router-link class="nav-link" :to="`/users/${getUserId()}`">Your Account</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link v-if="isLoggedIn()" to="/hikes">Hikes Index</router-link>
+      <li class="nav-item">
+        <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link>
+      <li class="nav-item">
+        <router-link v-if="!isLoggedIn()" to="/login">Login</router-link>
+      <li class="nav-item">
+        <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link>
+      </li>
+    </div> -->
+
+    <!-- =========== Header =========== -->
+    <header class="clearfix">
+      <div class="logo">
+        <a href="index.html"><img src="/images/design/logo.png" alt="TWILLI Sky" id="logo_dark" /></a>
+      </div>
+      <!-- .logo -->
+
+      <div id="main-menu-container" class="clearfix">
+        <div id="mobile-menu-icon" class="btn btn-outline-inverse visible-xs">
+          <span class="glyphicon glyphicon-th"></span>
+        </div>
+
+        <ul id="main-menu">
+          <li v-if="isLoggedIn()" class="menu-item">
+            <router-link to="/hikes">Hikes</router-link>
+          </li>
+          <li v-if="isLoggedIn()" class="menu-item">
+            <router-link :to="`/users/${getUserId()}`">My Account</router-link>
+          </li>
+        </ul>
+        <!-- #main-menu -->
+      </div>
+      <!-- #menu-container -->
+    </header>
+    <!-- End: Header -->
+
+    <!-- =========== Page Body Inside Content =========== -->
+    <div class="inside-body-content-container clearfix">
+      <router-view />
     </div>
-    <router-view />
+    <!-- .inside-body-content-container -->
+    <!-- End: Page Body Inside Content -->
   </div>
 </template>
 
 <style>
-#app {
+/*#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -37,7 +73,7 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+}*/
 </style>
 
 <script>
