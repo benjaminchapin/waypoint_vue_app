@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <h2>{{ hike.name }}</h2>
-    <p>Description: {{ hike.description }}</p>
-    <p>Difficulty Level: {{ hike.difficulty_level }}</p>
-    <br />
+    <div class="container-fluid horizontal-section-container clearfix" id="hike_info">
+      <h2>{{ hike.name }}</h2>
+      <p>Description: {{ hike.description }}</p>
+      <p>Difficulty Level: {{ hike.difficulty_level }}</p>
+      <br />
+    </div>
     <div id="map"></div>
     <br />
     <form v-on:submit.prevent="updateHike()">
@@ -12,14 +14,15 @@
         <li class="text-danger" v-for="error in errors">{{ error }}</li>
       </ul>
       <div class="form-group">
-        Name:
+        <p>Name:</p>
         <input v-model="hike.name" type="text" placeholder="name" />
         <br />
-        Description:
+        <p>Description:</p>
         <input v-model="hike.description" type="text" placeholder="description" />
         <br />
         <div class="form-group">
           <label for="difficulty_levels">Difficulty Level:</label>
+          <br />
           <select id="difficulty_levels" type="text" class="form-control" v-model="hike.difficulty_level">
             <option value="novice">Novice</option>
             <option value="intermediate">Intermediate</option>
@@ -32,6 +35,7 @@
     </form>
     <button v-on:click="destroyHike(hike)">Delete Hike</button>
     <br />
+
     <h1>Waypoints:</h1>
     <div v-for="waypoint in hike.waypoints">
       <p>Name: {{ waypoint.name }}</p>
@@ -64,33 +68,46 @@
         <button v-on:click="destroyWaypoint(waypoint)">Delete Waypoint</button>
       </form>
     </div>
-    <p>{{ errors }}</p>
-    <h1>Add Waypoint To Hike</h1>
-    <div>
-      Name:
-      <input type="text" v-model="newWaypointName" />
-      <br />
-      Description:
-      <input type="text" v-model="newWaypointDescription" />
-      <br />
-      <small v-if="newWaypointDescription" v-bind:class="{ 'text-danger': 100 - newWaypointDescription.length < 10 }">
-        {{ 100 - newWaypointDescription.length }} characters remaining
-      </small>
-      <br />
-      Image URL:
-      <input type="text" v-model="newWaypointImageURL" />
-      <br />
-      Address:
-      <input type="text" v-model="newWaypointAddress" />
-      <br />
-      <button v-on:click="createWaypoint()">Create Waypoint</button>
-      <br />
+
+    <div class="container-fluid horizontal-section-container clearfix">
+      <div class="container">
+        <h1>Add Waypoint To Hike</h1>
+        <div>
+          <p>Name:</p>
+          <input type="text" v-model="newWaypointName" />
+          <br />
+          <p>Description</p>
+          <input type="text" v-model="newWaypointDescription" />
+          <br />
+          <small
+            v-if="newWaypointDescription"
+            v-bind:class="{ 'text-danger': 100 - newWaypointDescription.length < 10 }"
+          >
+            {{ 100 - newWaypointDescription.length }} characters remaining
+          </small>
+          <br />
+          <p>Image URL:</p>
+          <input type="text" v-model="newWaypointImageURL" />
+          <p>Address:</p>
+          <input type="text" v-model="newWaypointAddress" />
+          <br />
+          <button v-on:click="createWaypoint()">Create Waypoint</button>
+          <br />
+        </div>
+        <router-link to="/hikes">Back to all hikes</router-link>
+      </div>
     </div>
-    <router-link to="/hikes">Back to all hikes</router-link>
   </div>
 </template>
 
 <style>
+#hike_info {
+  text-align: center;
+  padding: 14px 20px 12px 45px;
+}
+#difficulty_levels {
+  width: 50%;
+}
 #map {
   top: 0;
   bottom: 0;
@@ -112,11 +129,11 @@
 }
 
 .start-marker {
-  background-image: url("https://cdn.iconscout.com/icon/premium/png-256-thumb/mushroom-1409567-1192660.png");
+  background-image: url("https://www.iconsdb.com/icons/preview/green/star-7-xxl.png");
 }
 
 .end-marker {
-  background-image: url("https://cdn.iconscout.com/icon/premium/png-256-thumb/mushroom-1409567-1192660.png");
+  background-image: url("https://cdn.iconscout.com/icon/premium/png-256-thumb/finish-flag-1763657-1503044.png");
 }
 </style>
 
@@ -171,7 +188,7 @@ export default {
         .addTo(map);
       this.hike.waypoints.forEach(waypoint => {
         var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-          `<h2>${waypoint.name}</h2><img src="${waypoint.image_url}" alt="" />`
+          `<h2>${waypoint.name}</h2><img src ="${waypoint.image_url}" alt="" />`
         );
 
         // create a DOM element for the marker

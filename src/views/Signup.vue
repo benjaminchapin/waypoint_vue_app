@@ -1,47 +1,68 @@
 <template>
   <div class="signup">
-    <div class="container">
-      <form v-on:submit.prevent="submit()">
-        <h1>Signup</h1>
-        <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-        </ul>
-        <div class="form-group">
-          <label>First Name:</label>
-          <input type="text" class="form-control" v-model="firstName" />
+    <!-- =========== Section 1: Top Banner =========== -->
+    <div id="top-banner" class="container-fluid horizontal-section-container clearfix">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="/images/temp/carousel-img6.jpg" alt="Green scenery" class="full-width-image" />
         </div>
-        <div class="form-group">
-          <label>Last Name:</label>
-          <input type="text" class="form-control" v-model="lastName" />
-        </div>
-        <div class="form-group">
-          <label>Location (Address):</label>
-          <input type="text" class="form-control" v-model="address" />
-        </div>
+        <!-- .col-xs-12 -->
+      </div>
+      <!-- .row -->
+    </div>
+    <!-- End: Section 1: Top Banner -->
 
-        <div class="form-group">
-          <label for="skill_levels">Difficulty Level:</label>
-          <select id="skill_levels" type="text" class="form-control" v-model="skillLevel">
-            <option value="novice">Novice</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
-        </div>
+    <div class="container-fluid horizontal-section-container clearfix">
+      <div class="container">
+        <form v-on:submit.prevent="submit()">
+          <h1>Signup</h1>
+          <ul>
+            <li class="text-danger" v-for="error in errors">{{ error }}</li>
+          </ul>
+          <div class="form-group">
+            <label>First Name:</label>
+            <br />
+            <input type="text" class="form-control" v-model="firstName" />
+          </div>
+          <div class="form-group">
+            <label>Last Name:</label>
+            <br />
+            <input type="text" class="form-control" v-model="lastName" />
+          </div>
+          <div class="form-group">
+            <label>Location (Address):</label>
+            <br />
+            <input type="text" class="form-control" v-model="address" />
+          </div>
 
-        <div class="form-group">
-          <label>Email:</label>
-          <input type="email" class="form-control" v-model="email" />
-        </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="password" class="form-control" v-model="password" />
-        </div>
-        <div class="form-group">
-          <label>Confirm Password:</label>
-          <input type="password" class="form-control" v-model="passwordConfirmation" />
-        </div>
-        <input type="submit" class="btn btn-primary" value="Submit" />
-      </form>
+          <div class="form-group">
+            <label for="skill_levels">Difficulty Level:</label>
+            <br />
+            <select id="skill_levels" type="text" class="form-control" v-model="skillLevel">
+              <option value="novice">Novice</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Email:</label>
+            <br />
+            <input type="email" class="form-control" v-model="email" />
+          </div>
+          <div class="form-group">
+            <label>Password:</label>
+            <br />
+            <input type="password" class="form-control" v-model="password" />
+          </div>
+          <div class="form-group">
+            <label>Confirm Password:</label>
+            <br />
+            <input type="password" class="form-control" v-model="passwordConfirmation" />
+          </div>
+          <input type="submit" class="btn btn-primary" value="Submit" />
+        </form>
+      </div>
     </div>
   </div>
 </template>

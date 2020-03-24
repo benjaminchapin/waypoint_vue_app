@@ -35,7 +35,19 @@
             <router-link to="/hikes">Hikes</router-link>
           </li>
           <li v-if="isLoggedIn()" class="menu-item">
+            <router-link to="/hikes/new">Create A Hike</router-link>
+          </li>
+          <li v-if="isLoggedIn()" class="menu-item">
             <router-link :to="`/users/${getUserId()}`">My Account</router-link>
+          </li>
+          <li v-if="isLoggedIn()" class="menu-item">
+            <router-link to="/logout">Logout</router-link>
+          </li>
+          <li v-if="!isLoggedIn()" class="menu-item">
+            <router-link to="/login">Login</router-link>
+          </li>
+          <li v-if="!isLoggedIn()" class="menu-item">
+            <router-link to="/signup">Signup</router-link>
           </li>
         </ul>
         <!-- #main-menu -->

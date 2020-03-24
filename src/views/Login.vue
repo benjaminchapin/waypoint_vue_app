@@ -1,21 +1,37 @@
 <template>
   <div class="login">
-    <div class="container">
-      <form v-on:submit.prevent="submit()">
-        <h1>Login</h1>
-        <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-        </ul>
-        <div class="form-group">
-          <label>Email:</label>
-          <input type="email" class="form-control" v-model="email" />
+    <!-- =========== Section 1: Top Banner =========== -->
+    <div id="top-banner" class="container-fluid horizontal-section-container clearfix">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="/images/temp/carousel-img3.jpg" alt="Green scenery" class="full-width-image" />
         </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="password" class="form-control" v-model="password" />
-        </div>
-        <input type="submit" class="btn btn-primary" value="Submit" />
-      </form>
+        <!-- .col-xs-12 -->
+      </div>
+      <!-- .row -->
+    </div>
+    <!-- End: Section 1: Top Banner -->
+
+    <div class="container-fluid horizontal-section-container clearfix">
+      <div class="container">
+        <form v-on:submit.prevent="submit()">
+          <h1>Login</h1>
+          <ul>
+            <li class="text-danger" v-for="error in errors">{{ error }}</li>
+          </ul>
+          <div class="form-group">
+            <label>Email:</label>
+            <br />
+            <input type="email" class="form-control" v-model="email" />
+          </div>
+          <div class="form-group">
+            <label>Password:</label>
+            <br />
+            <input type="password" class="form-control" v-model="password" />
+          </div>
+          <input type="submit" class="btn btn-primary" value="Submit" />
+        </form>
+      </div>
     </div>
   </div>
 </template>

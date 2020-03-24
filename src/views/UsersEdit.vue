@@ -1,51 +1,73 @@
 <template>
-  <div class="users-edit">
-    <div class="container">
-      <form v-on:submit.prevent="submit()">
-        <h1>Edit User Information</h1>
-        <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-        </ul>
-        <div class="form-group">
-          <label>Email:</label>
-          <input type="text" class="form-control" v-model="user.email" />
-        </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="password" class="form-control" v-model="user.password" />
-        </div>
-        <div class="form-group">
-          <label>Confirm Password:</label>
-          <input type="password" class="form-control" v-model="user.password_confirmation" />
-        </div>
-        <div class="form-group">
-          <label>First Name:</label>
-          <input type="text" class="form-control" v-model="user.first_name" />
-        </div>
-        <div class="form-group">
-          <label>Last Name:</label>
-          <input type="text" class="form-control" v-model="user.last_name" />
-        </div>
+  <div class="container-fluid horizontal-section-container clearfix">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="users-edit">
+          <div class="container">
+            <form v-on:submit.prevent="submit()">
+              <h1>Edit User Information</h1>
+              <ul>
+                <li class="text-danger" v-for="error in errors">{{ error }}</li>
+              </ul>
+              <div class="form-group">
+                <label>Email:</label>
+                <br />
+                <input type="text" class="form-control" v-model="user.email" />
+              </div>
+              <div class="form-group">
+                <label>Password:</label>
+                <br />
+                <input type="password" class="form-control" v-model="user.password" />
+              </div>
+              <div class="form-group">
+                <label>Confirm Password:</label>
+                <br />
+                <input type="password" class="form-control" v-model="user.password_confirmation" />
+              </div>
+              <div class="form-group">
+                <label>First Name:</label>
+                <br />
+                <input type="text" class="form-control" v-model="user.first_name" />
+              </div>
+              <div class="form-group">
+                <label>Last Name:</label>
+                <br />
+                <input type="text" class="form-control" v-model="user.last_name" />
+              </div>
 
-        <div class="form-group">
-          <label for="skill_levels">Skill Level:</label>
-          <select id="skill_levels" type="text" class="form-control" v-model="user.skill_level">
-            <option value="novice">Novice</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
-        </div>
+              <div class="form-group">
+                <label for="skill_levels">Skill Level:</label>
+                <br />
+                <select id="skill_levels" type="text" class="form-control" v-model="user.skill_level">
+                  <option value="novice">Novice</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
 
-        <input type="submit" class="btn btn-primary" value="Update User" />
-        <br />
-        <br />
-        <div>
-          <button v-on:click="destroyUser()">Delete Account</button>
+              <input type="submit" class="btn btn-primary" value="Update User" />
+              <br />
+              <br />
+              <div>
+                <button class="btn btn-danger" v-on:click="destroyUser()">Delete Account</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
+
+<style>
+#difficulty_levels {
+  width: 50%;
+}
+.form-control {
+  padding: 14px 20px 12px 45px;
+  display: inline-block;
+}
+</style>
 
 <script>
 import axios from "axios";

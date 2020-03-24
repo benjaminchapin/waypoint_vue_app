@@ -1,43 +1,74 @@
 <template>
   <div class="hikes-new">
-    <div class="container">
-      <form v-on:submit.prevent="createHike()">
-        <h1>New Hike</h1>
-        <img v-if="status" v-bind:src="`https://http.cat/${status}`" />
-        <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-        </ul>
-        <div class="form-group">
-          <label>Name:</label>
-          <input type="text" class="form-control" v-model="name" />
+    <!-- =========== Section 1: Top Banner =========== -->
+    <div id="top-banner" class="container-fluid horizontal-section-container clearfix">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="/images/temp/banner-1.jpg" alt="Green scenery" class="full-width-image" />
         </div>
-        <div class="form-group">
-          <label>Description:</label>
-          <input type="text" class="form-control" v-model="description" />
-        </div>
+        <!-- .col-xs-12 -->
+      </div>
+      <!-- .row -->
+    </div>
+    <!-- End: Section 1: Top Banner -->
 
-        <div class="form-group">
-          <label for="difficulty_levels">Difficulty Level:</label>
-          <select id="difficulty_levels" type="text" class="form-control" v-model="difficultyLevel">
-            <option value="novice">Novice</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
-        </div>
+    <div class="container-fluid horizontal-section-container clearfix">
+      <div class="container">
+        <form v-on:submit.prevent="createHike()">
+          <h1>New Hike</h1>
+          <img v-if="status" v-bind:src="`https://http.cat/${status}`" />
+          <ul>
+            <li class="text-danger" v-for="error in errors">{{ error }}</li>
+          </ul>
+          <div class="form-group">
+            <label>Name:</label>
+            <br />
+            <input type="text" class="form-control" v-model="name" />
+          </div>
+          <div class="form-group">
+            <label>Description:</label>
+            <br />
+            <input type="text" class="form-control" v-model="description" />
+          </div>
 
-        <div class="form-group">
-          <label>Start Address:</label>
-          <input type="text" class="form-control" v-model="startAddress" />
-        </div>
-        <div class="form-group">
-          <label>End Address:</label>
-          <input type="text" class="form-control" v-model="endAddress" />
-        </div>
-        <input type="submit" class="btn btn-primary" value="Create Hike" />
-      </form>
+          <div class="form-group">
+            <label for="difficulty_levels">Difficulty Level:</label>
+            <br />
+            <select id="difficulty_levels" type="text" class="form-control" v-model="difficultyLevel">
+              <option value="novice">Novice</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Start Address:</label>
+            <br />
+            <input type="text" class="form-control" v-model="startAddress" />
+          </div>
+          <div class="form-group">
+            <label>End Address:</label>
+            <br />
+            <input type="text" class="form-control" v-model="endAddress" />
+          </div>
+          <input type="submit" class="btn btn-primary" value="Create Hike" />
+        </form>
+      </div>
     </div>
   </div>
 </template>
+
+<style>
+#difficulty_levels {
+  width: 50%;
+}
+.form-control {
+  padding: 14px 20px 12px 45px;
+  width: 50%;
+  text-align: center;
+  display: inline-block;
+}
+</style>
 
 <script>
 import axios from "axios";
