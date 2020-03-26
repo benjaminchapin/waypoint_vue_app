@@ -27,7 +27,7 @@
                       </div>
                       <div class="meta-item date">
                         <span class="glyphicon glyphicon-time"></span>
-                        Created: {{ hike.created_at }}
+                        Created: {{ dateFormat(hike.created_at) }}
                       </div>
                     </div>
                     <!-- .meta -->
@@ -190,7 +190,7 @@
                               type="text"
                               class="form-control"
                               id="exampleInputName1"
-                              placeholder="Enter Image URL"
+                              placeholder="Enter Address"
                               v-model="newWaypointAddress"
                             />
                           </div>
@@ -209,7 +209,14 @@
                       <!-- comment 1 -->
                       <div class="media clearfix " v-for="waypoint in hike.waypoints">
                         <a class="media-thumb">
-                          <img class="media-object zoom" :src="waypoint.image_url" alt="Half moon" />
+                          <img
+                            class="media-object zoom"
+                            :src="waypoint.image_url"
+                            v-on:click="currentWaypoint = waypoint"
+                            data-toggle="modal"
+                            data-target="#showImageModal"
+                            alt="Half moon"
+                          />
                         </a>
                         <div class="media-body">
                           <h4 class="media-heading">{{ waypoint.name }}</h4>
@@ -340,6 +347,30 @@
       </div>
     </div>
     <!-- END MODAL -->
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="showImageModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="showImageModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="modal-title" id="showImageModalLabel">{{ currentWaypoint.name }}</h5>
+            <hr />
+            <img :src="currentWaypoint.image_url" />
+            <br />
+            <button type="button" class="btn btn-outline-inverse btn-lg float-right" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END MODAL -->
   </div>
 </template>
 
@@ -376,7 +407,7 @@
 <script>
 /*global mapboxgl*/
 import axios from "axios";
-import dayjs from "dayjs";
+import moment from "moment";
 
 export default {
   data: function() {
@@ -500,6 +531,9 @@ export default {
         .catch(error => {
           this.waypointCreateErrors = error.response.data.errors;
         });
+    },
+    dateFormat: function(date) {
+      return moment(date).format("MMMM Do YYYY, h:mm:ss a");
     },
     destroyWaypoint: function(waypoint) {
       if (confirm("Are you sure you want to delete this waypoint?")) {
