@@ -17,67 +17,68 @@
       <div class="row">
         <div class="col-sm-12">
           <!-- Main Page Content -->
-
-          <div class="section-content">
-            <h1 class="page_title">All Hikes</h1>
-            <div>
-              <button v-on:click="currentUserId = $parent.getUserId()" class="btn btn-outline-inverse btn-sm">
-                My Hikes
-              </button>
-              <button v-on:click="currentUserId = ''" class="btn btn-outline-inverse btn-sm">
-                All Hikes
-              </button>
-            </div>
-            <div>
-              <label for="difficulty_levels">Sort By Difficulty Level:</label>
-              <br />
-              <select id="difficulty_levels" type="text" class="form-control" v-model="difficultyFilter">
-                <option value="">All difficulties</option>
-                <option value="novice">Novice</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-              </select>
-            </div>
-            <br />
-
-            <!-- Media List -->
-            <div class="media-list clearfix">
-              <!-- Media List Item -->
-              <!-- filterBy(hikes, difficultyFilter, 'difficulty_level') -->
-              <div
-                v-for="hike in filterBy(
-                  filterBy(hikes, difficultyFilter, 'difficulty_level'),
-                  currentUserId,
-                  'user_id'
-                )"
-                class="media clearfix"
-              >
-                <div class="item w-icon col-sm-4">
-                  <div class="thumbnail item-content">
-                    <a href="#" class="pull-left img-mask-effect zoom scaleimage">
-                      <img v-if="hike.image_url" :src="hike.image_url" alt="" />
-                      <img v-else src="/images/temp/gallery/gallery-masonry-7.jpg" alt="Landscape, mountains" />
-                      <i class="mask"><span class="glyphicon glyphicon-plus-sign medium"></span></i>
-                    </a>
-                    <div class="media-body">
-                      <h4 class="media-heading">
-                        <router-link :to="`/hikes/${hike.id}`">{{ hike.name }}</router-link>
-                      </h4>
-                      <div class="caption">
-                        <p>{{ hike.description }}</p>
-                        <p>Difficulty: {{ hike.difficulty_level }}</p>
-                      </div>
-                      <p>
-                        <router-link :to="`/hikes/${hike.id}`" class="btn btn-outline-inverse btn-sm">
-                          View Hike
-                        </router-link>
-                      </p>
-                    </div>
-                  </div>
+          <div id="main-page-content" class="section-container main-page-content clearfix">
+            <div class="section-content">
+              <h1 class="page_title">All Hikes</h1>
+              <div class="row">
+                <div class="col-sm-6">
+                  <button v-on:click="currentUserId = $parent.getUserId()" class="btn btn-outline-inverse btn-sm">
+                    My Hikes
+                  </button>
+                  <button v-on:click="currentUserId = ''" class="btn btn-outline-inverse btn-sm">
+                    All Hikes
+                  </button>
                 </div>
-                <!-- .media -->
+                <div class="col-sm-6">
+                  <select id="difficulty_levels" type="text" class="form-control" v-model="difficultyFilter">
+                    <option value="">Sort by difficulty</option>
+                    <option value="novice">Novice</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </div>
               </div>
-              <!-- .media-list -->
+
+              <!-- Media List -->
+              <div class="media-list clearfix">
+                <!-- Media List Item -->
+                <!-- filterBy(hikes, difficultyFilter, 'difficulty_level') -->
+                <div
+                  v-for="hike in filterBy(
+                    filterBy(hikes, difficultyFilter, 'difficulty_level'),
+                    currentUserId,
+                    'user_id'
+                  )"
+                  class="media clearfix"
+                  text-align:
+                  center
+                >
+                  <!-- <div class="item w-icon col-sm-4"> -->
+                  <!-- <div class="thumbnail item-content "> -->
+                  <a href="#" class="pull-left img-mask-effect zoom scaleimage">
+                    <img v-if="hike.image_url" :src="hike.image_url" alt="" />
+                    <img v-else src="/images/temp/gallery/gallery-masonry-7.jpg" alt="Landscape, mountains" />
+                    <i class="mask"><span class="glyphicon glyphicon-plus-sign medium"></span></i>
+                  </a>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <router-link :to="`/hikes/${hike.id}`">{{ hike.name }}</router-link>
+                    </h4>
+                    <div class="caption">
+                      <p>{{ hike.description }}</p>
+                    </div>
+                    <p>
+                      <router-link :to="`/hikes/${hike.id}`" class="btn btn-outline-inverse btn-sm">
+                        View Hike
+                      </router-link>
+                    </p>
+                  </div>
+                  <!-- </div> -->
+                  <!-- </div> -->
+                  <!-- .media -->
+                </div>
+                <!-- .media-list -->
+              </div>
             </div>
             <!-- .section-content -->
           </div>
@@ -93,16 +94,7 @@
   </div>
 </template>
 
-<style>
-#difficulty_levels {
-  width: 50%;
-}
-.form-control {
-  padding: 14px 20px 12px 45px;
-  text-align: center;
-  display: inline-block;
-}
-</style>
+<style></style>
 
 <script>
 import axios from "axios";

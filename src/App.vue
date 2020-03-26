@@ -1,27 +1,9 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <li class="nav-item">
-        <router-link class="nav-link" to="/">Home</router-link>
-      </li>
-      <li v-if="isLoggedIn()" class="nav-item">
-        <router-link class="nav-link" :to="`/users/${getUserId()}`">Your Account</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link v-if="isLoggedIn()" to="/hikes">Hikes Index</router-link>
-      <li class="nav-item">
-        <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link>
-      <li class="nav-item">
-        <router-link v-if="!isLoggedIn()" to="/login">Login</router-link>
-      <li class="nav-item">
-        <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link>
-      </li>
-    </div> -->
-
     <!-- =========== Header =========== -->
     <header class="clearfix">
       <div class="logo">
-        <a href="index.html"><img src="/images/design/logo.png" alt="TWILLI Sky" id="logo_dark" /></a>
+        <a href="index.html"><img src="/images/design/WaypointLogo.png" alt="TWILLI Sky" id="logo_dark" /></a>
       </div>
       <!-- .logo -->
 
@@ -31,24 +13,40 @@
         </div>
 
         <ul id="main-menu">
-          <li v-if="isLoggedIn()" class="menu-item">
-            <router-link to="/hikes">Hikes</router-link>
-          </li>
-          <li v-if="isLoggedIn()" class="menu-item">
-            <router-link to="/hikes/new">Create A Hike</router-link>
-          </li>
-          <li v-if="isLoggedIn()" class="menu-item">
-            <router-link :to="`/users/${getUserId()}`">My Account</router-link>
-          </li>
-          <li v-if="isLoggedIn()" class="menu-item">
-            <router-link to="/logout">Logout</router-link>
-          </li>
-          <li v-if="!isLoggedIn()" class="menu-item">
-            <router-link to="/login">Login</router-link>
-          </li>
-          <li v-if="!isLoggedIn()" class="menu-item">
-            <router-link to="/signup">Signup</router-link>
-          </li>
+          <router-link v-if="isLoggedIn()" to="/hikes" v-slot="{ href, route, navigate, isActive, isExactActive }">
+            <li class="menu-item" :class="[isActive && 'router-link-active', isExactActive && 'current-menu-item']">
+              <a :href="href" @click="navigate">Hikes</a>
+            </li>
+          </router-link>
+          <router-link v-if="isLoggedIn()" to="/hikes/new" v-slot="{ href, route, navigate, isActive, isExactActive }">
+            <li class="menu-item" :class="[isActive && 'router-link-active', isExactActive && 'current-menu-item']">
+              <a :href="href" @click="navigate">New Hike</a>
+            </li>
+          </router-link>
+          <router-link
+            v-if="isLoggedIn()"
+            :to="`/users/${getUserId()}`"
+            v-slot="{ href, route, navigate, isActive, isExactActive }"
+          >
+            <li class="menu-item" :class="[isActive && 'router-link-active', isExactActive && 'current-menu-item']">
+              <a :href="href" @click="navigate">My Account</a>
+            </li>
+          </router-link>
+          <router-link v-if="isLoggedIn()" to="/logout" v-slot="{ href, route, navigate, isActive, isExactActive }">
+            <li class="menu-item" :class="[isActive && 'router-link-active', isExactActive && 'current-menu-item']">
+              <a :href="href" @click="navigate">Logout</a>
+            </li>
+          </router-link>
+          <router-link v-if="!isLoggedIn()" to="/login" v-slot="{ href, route, navigate, isActive, isExactActive }">
+            <li class="menu-item" :class="[isActive && 'router-link-active', isExactActive && 'current-menu-item']">
+              <a :href="href" @click="navigate">Login</a>
+            </li>
+          </router-link>
+          <router-link v-if="!isLoggedIn()" to="/signup" v-slot="{ href, route, navigate, isActive, isExactActive }">
+            <li class="menu-item" :class="[isActive && 'router-link-active', isExactActive && 'current-menu-item']">
+              <a :href="href" @click="navigate">Signup</a>
+            </li>
+          </router-link>
         </ul>
         <!-- #main-menu -->
       </div>
@@ -65,28 +63,11 @@
   </div>
 </template>
 
-<style>
-/*#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
+<!-- <style>
+#main-menu-container a.router-link-exact-active {
   color: #42b983;
-}*/
-</style>
+}
+</style> -->
 
 <script>
 export default {

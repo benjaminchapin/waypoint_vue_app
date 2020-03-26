@@ -13,62 +13,96 @@
     <!-- End: Section 1: Top Banner -->
 
     <div class="container-fluid horizontal-section-container clearfix">
-      <div class="container">
-        <form v-on:submit.prevent="createHike()">
-          <h1>New Hike</h1>
-          <img v-if="status" v-bind:src="`https://http.cat/${status}`" />
-          <ul>
-            <li class="text-danger" v-for="error in errors">{{ error }}</li>
-          </ul>
-          <div class="form-group">
-            <label>Name:</label>
-            <br />
-            <input type="text" class="form-control" v-model="name" />
-          </div>
-          <div class="form-group">
-            <label>Description:</label>
-            <br />
-            <input type="text" class="form-control" v-model="description" />
-          </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- Main Page Content - Left -->
+          <div id="main-page-content-left" class="section-container main-page-content clearfix">
+            <div class="section-content clearfix">
+              <h1 class="page_title">Create a hike</h1>
 
-          <div class="form-group">
-            <label for="difficulty_levels">Difficulty Level:</label>
-            <br />
-            <select id="difficulty_levels" type="text" class="form-control" v-model="difficultyLevel">
-              <option value="novice">Novice</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
+              <!-- Contact Details -->
+              <h6>
+                Add a hike to the hikes index...
+              </h6>
 
-          <div class="form-group">
-            <label>Start Address:</label>
-            <br />
-            <input type="text" class="form-control" v-model="startAddress" />
+              <div id="contact-form-container" class="clearfix">
+                <ul>
+                  <li class="text-danger" v-for="error in errors">{{ error }}</li>
+                </ul>
+                <form class="validate-form clearfix" v-on:submit.prevent="submit()">
+                  <div class="form-group">
+                    <label for="form-name">Name</label>
+                    <input
+                      type="text"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-name"
+                      v-model="name"
+                      placeholder="Enter name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-description">Description</label>
+                    <input
+                      type="text"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-description"
+                      v-model="description"
+                      placeholder="Enter description"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-start-address">Start Address</label>
+                    <input
+                      type="text"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-start-address"
+                      v-model="startAddress"
+                      placeholder="Enter start address"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-end-address">End Address</label>
+                    <input
+                      type="text"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-end-address"
+                      v-model="endAddress"
+                      placeholder="Enter end address"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-difficulty-level">Difficulty Level</label>
+                    <select id="form-difficulty_level" type="text" class="form-control" v-model="difficultyLevel">
+                      <option value="novice">Novice</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" class="btn btn-outline-inverse btn-lg">Create Hike</button>
+                  <i class="form-loader fa fa-spinner fa-spin"></i>
+                  <div class="form-group form-general-error-container"></div>
+                </form>
+              </div>
+              <!-- #contact-form-container -->
+            </div>
+            <!-- .section-content -->
           </div>
-          <div class="form-group">
-            <label>End Address:</label>
-            <br />
-            <input type="text" class="form-control" v-model="endAddress" />
-          </div>
-          <input type="submit" class="btn btn-primary" value="Create Hike" />
-        </form>
+          <!-- .section-container -->
+          <!-- End: Main Page Content - Left -->
+        </div>
+        <!-- .col-sm-12   -->
       </div>
+      <!-- .row -->
     </div>
   </div>
 </template>
 
-<style>
-#difficulty_levels {
-  width: 50%;
-}
-.form-control {
-  padding: 14px 20px 12px 45px;
-  width: 50%;
-  text-align: center;
-  display: inline-block;
-}
-</style>
+<style></style>
 
 <script>
 import axios from "axios";
@@ -86,7 +120,7 @@ export default {
     };
   },
   methods: {
-    createHike: function() {
+    submit: function() {
       var params = {
         name: this.name,
         description: this.description,

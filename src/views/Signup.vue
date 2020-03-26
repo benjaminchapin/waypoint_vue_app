@@ -12,58 +12,117 @@
     </div>
     <!-- End: Section 1: Top Banner -->
 
+    <!-- =========== Section 2 =========== -->
     <div class="container-fluid horizontal-section-container clearfix">
-      <div class="container">
-        <form v-on:submit.prevent="submit()">
-          <h1>Signup</h1>
-          <ul>
-            <li class="text-danger" v-for="error in errors">{{ error }}</li>
-          </ul>
-          <div class="form-group">
-            <label>First Name:</label>
-            <br />
-            <input type="text" class="form-control" v-model="firstName" />
-          </div>
-          <div class="form-group">
-            <label>Last Name:</label>
-            <br />
-            <input type="text" class="form-control" v-model="lastName" />
-          </div>
-          <div class="form-group">
-            <label>Location (Address):</label>
-            <br />
-            <input type="text" class="form-control" v-model="address" />
-          </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- Main Page Content - Left -->
+          <div id="main-page-content-left" class="section-container main-page-content clearfix">
+            <div class="section-content clearfix">
+              <h1 class="page_title">Signup</h1>
 
-          <div class="form-group">
-            <label for="skill_levels">Difficulty Level:</label>
-            <br />
-            <select id="skill_levels" type="text" class="form-control" v-model="skillLevel">
-              <option value="novice">Novice</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
+              <!-- Contact Details -->
+              <h6>
+                Signup for an account with us...
+              </h6>
 
-          <div class="form-group">
-            <label>Email:</label>
-            <br />
-            <input type="email" class="form-control" v-model="email" />
+              <div id="contact-form-container" class="clearfix">
+                <ul>
+                  <li class="text-danger" v-for="error in errors">{{ error }}</li>
+                </ul>
+                <form class="validate-form clearfix" v-on:submit.prevent="submit()">
+                  <div class="form-group">
+                    <label for="form-first-name">First Name</label>
+                    <input
+                      type="text"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-first-name"
+                      v-model="firstName"
+                      placeholder="Enter first name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-last-name">Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-last-name"
+                      v-model="lastName"
+                      placeholder="Enter last name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-email">Email address</label>
+                    <input
+                      type="email"
+                      class="form-control validate-field required"
+                      data-validation-type="email"
+                      id="form-email"
+                      v-model="email"
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-address">Address</label>
+                    <input
+                      type="text"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-address"
+                      v-model="address"
+                      placeholder="Enter address"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-skill-level">Skill Level</label>
+                    <select id="form-skill_level" type="text" class="form-control" v-model="skillLevel">
+                      <option value="novice">Novice</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="form-password">Password</label>
+                    <input
+                      type="password"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-password"
+                      v-model="password"
+                      placeholder="Enter password"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-password-confirmation">Password Confirmation</label>
+                    <input
+                      type="password"
+                      class="form-control validate-field required"
+                      data-validation-type="string"
+                      id="form-password-confirmation"
+                      v-model="passwordConfirmation"
+                      placeholder="Enter password confirmation"
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-outline-inverse btn-lg">Submit</button>
+                  <i class="form-loader fa fa-spinner fa-spin"></i>
+                  <div class="form-group form-general-error-container"></div>
+                </form>
+              </div>
+              <!-- #contact-form-container -->
+            </div>
+            <!-- .section-content -->
           </div>
-          <div class="form-group">
-            <label>Password:</label>
-            <br />
-            <input type="password" class="form-control" v-model="password" />
-          </div>
-          <div class="form-group">
-            <label>Confirm Password:</label>
-            <br />
-            <input type="password" class="form-control" v-model="passwordConfirmation" />
-          </div>
-          <input type="submit" class="btn btn-primary" value="Submit" />
-        </form>
+          <!-- .section-container -->
+          <!-- End: Main Page Content - Left -->
+        </div>
+        <!-- .col-sm-12   -->
       </div>
+      <!-- .row -->
     </div>
+    <!-- .container-fluid -->
+    <!-- End: Section 2 -->
   </div>
 </template>
 
